@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>get lat & long</title>
+</head>
+<style media="screen">
+	.btn{
+		padding: 5px 10px;
+		border: 1px solid black;
+		-webkit-border-radius: 20px;
+		-moz-border-radius: 20px;
+		border-radius: 20px;
+	}
+	.red{
+		color: #fff;
+		background-color: rgb(210, 55, 62);
+	}
+	.blue{
+		color: #fff;
+		background-color: rgb(38, 163, 184);
+
+	}
+	body{
+		text-align: center;
+	}
+	input{
+		min-width: 100px;
+		min-height: 25px;
+	}
+</style>
+<body>
+
+	<button id='getGeoData' type="button" name="button" class="btn red">Get location</button>
+	<br><br>
+	<input id="lat" type="text" name="lat" placeholder="latitude" value="">
+	<button id="copylat" type="button" name="button" class="btn blue">Copy latitude</button>
+	<br><br>
+	<input id="lon" type="text" name="lon" placeholder="longitude" value="">
+	<button id="copylon" type="button" name="button" class="btn blue">Copy longitude</button>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function(e) {
+		var latitude;
+		var longitude;
+		var lat = document.getElementById('lat');
+		var lon = document.getElementById('lon');
+		var getGeoData = document.getElementById('getGeoData');
+		var copylat = document.getElementById('copylat');
+		var copylon = document.getElementById('copylon');
+
+
+
+
+		function copyValue(id) {
+			/* Get the text field */
+			var copyText = document.getElementById(id);
+
+			/* Select the text field */
+			copyText.select();
+
+			/* Copy the text inside the text field */
+			document.execCommand("copy");
+
+			/* Alert the copied text */
+			alert("Copied the text: " + copyText.value);
+		}
+
+		copylon.addEventListener('click',function (e) {
+			copyValue('lon');
+
+		})
+		copylat.addEventListener('click',function (e) {
+			copyValue('lat');
+
+		})
+
+		if ("geolocation" in navigator) {
+		  /* géolocalisation possible */
+		} else {
+		  alert("geolocation isn't available on your device");
+		}
+
+
+
+		getGeoData.addEventListener('click',function (e) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+			console.log(position.coords.latitude, position.coords.longitude);
+			latitude = position.coords.latitude;
+			longitude = position.coords.longitude;
+			lat.value = latitude;
+			lon.value = longitude;
+	});
+
+		})
+	});
+
+
+</script>
